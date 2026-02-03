@@ -20,6 +20,7 @@ on:
           - hellotheasia/linux-5.10.y-rk35xx
           - hellotheasia/kernel-rockchip@nanopi6-v6.1.y
           - hellotheasia/linux-orangepi@orange-pi-6.1-rk35xx
+          - Lyric-c/kernel
       kernel_version:
         description: "Select kernel version"
         required: false
@@ -55,6 +56,7 @@ on:
         options:
           - -rk35xx-ophub
           - -rk35xx-hiasia
+          - -rk35xx-cao
       kernel_config:
         description: "Set the path of kernel .config"
         required: false
@@ -70,7 +72,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
+    if: ${{ github.event.repository.owner.id == github.event.sender.id }}
 
     steps:
       - name: Checkout
@@ -96,7 +98,7 @@ jobs:
 
       - name: Compile the kernel [ ${{ inputs.kernel_version }} ]
         uses: hellotheasia/amlogic-s9xxx-armbian@main
-        if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
+        if: ${{ steps.init.outputs.status == 'success' && !cancelled() }}
         with:
           build_target: kernel
           kernel_source: ${{ inputs.kernel_source }}
@@ -109,7 +111,7 @@ jobs:
 
       - name: Upload Kernel to Release
         uses: ncipollo/release-action@main
-        if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
+        if: ${{ env.PACKAGED_STATUS == 'success' && !cancelled() }}
         with:
           tag: kernel_rk35xx
           artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
