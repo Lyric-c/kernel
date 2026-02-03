@@ -98,7 +98,7 @@ jobs:
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Compile the kernel [ ${{ inputs.kernel_version }} ]
-        uses: unifreq/linux-6.1.y-rockchip@main
+        uses: Lyric-c/amlogic-s9xxx-armbian@main
         if: ${{ steps.init.outputs.status == 'success' && !cancelled() }}
         with:
           build_target: kernel
