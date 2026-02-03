@@ -21,7 +21,6 @@ on:
           - hellotheasia/kernel-rockchip@nanopi6-v6.1.y
           - hellotheasia/linux-orangepi@orange-pi-6.1-rk35xx
           - Lyric-c/kernel
-          - unifreq/linux-6.1.y-rockchip
       kernel_version:
         description: "Select kernel version"
         required: false
