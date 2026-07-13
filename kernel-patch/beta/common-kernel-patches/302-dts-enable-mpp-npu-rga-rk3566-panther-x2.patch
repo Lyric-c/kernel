@@ -1,0 +1,46 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Panther X2 User <user@example.com>
+Date: Sun, 13 Jul 2026 00:00:00 +0800
+Subject: [PATCH] arm64: dts: rockchip: enable MPP, NPU and RGA for
+ rk3566-panther-x2
+
+Enable the following hardware blocks on Panther X2:
+- MPP (Media Process Platform) for video encode/decode
+- NPU (Neural Processing Unit) for AI inference
+- RGA (Raster Graphics Acceleration) for 2D graphics / colorspace conversion
+
+These nodes are defined in rk356x.dtsi with status = "disabled" by default.
+Enable them so that /dev/mpp_service, /dev/dri/renderD129 (NPU), and /dev/rga
+are available when using the rk35xx BSP kernel.
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-panther-x2.dts | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+--- a/arch/arm64/boot/dts/rockchip/rk3566-panther-x2.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-panther-x2.dts
+@@ -430,3 +430,24 @@
+ &usb_host0_ehci {
+ 	status = "okay";
+ };
++
++&bus_npu {
++	status = "okay";
++};
++
++&mpp_srv {
++	status = "okay";
++};
++
++&rknpu {
++	rknpu-supply = <&vdd_npu>;
++	status = "okay";
++};
++
++&rknpu_mmu {
++	status = "okay";
++};
++
++&rk_rga {
++	status = "okay";
++};
